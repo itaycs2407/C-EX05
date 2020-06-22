@@ -32,10 +32,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxFirstPlayerName = new System.Windows.Forms.TextBox();
             this.textBoxSecondPlayerName = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ButtonPlayerChooser = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.ButtonBoardSize = new System.Windows.Forms.Button();
+            this.ButtonStart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -74,14 +74,17 @@
             this.textBoxSecondPlayerName.TabIndex = 4;
             this.textBoxSecondPlayerName.Text = "-Computer-";
             // 
-            // button1
+            // ButtonPlayerChooser
             // 
-            this.button1.Location = new System.Drawing.Point(421, 55);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Against a Friend";
-            this.button1.UseVisualStyleBackColor = true;
+            this.ButtonPlayerChooser.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.ButtonPlayerChooser.ForeColor = System.Drawing.Color.Black;
+            this.ButtonPlayerChooser.Location = new System.Drawing.Point(421, 55);
+            this.ButtonPlayerChooser.Name = "ButtonPlayerChooser";
+            this.ButtonPlayerChooser.Size = new System.Drawing.Size(118, 23);
+            this.ButtonPlayerChooser.TabIndex = 5;
+            this.ButtonPlayerChooser.Text = "Against a Friend";
+            this.ButtonPlayerChooser.UseVisualStyleBackColor = true;
+            this.ButtonPlayerChooser.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
             // 
@@ -93,35 +96,37 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Board Size :";
             // 
-            // button2
+            // ButtonBoardSize
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.button2.Location = new System.Drawing.Point(19, 156);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(181, 115);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = false;
+            this.ButtonBoardSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.ButtonBoardSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.ButtonBoardSize.Location = new System.Drawing.Point(19, 156);
+            this.ButtonBoardSize.Name = "ButtonBoardSize";
+            this.ButtonBoardSize.Size = new System.Drawing.Size(181, 115);
+            this.ButtonBoardSize.TabIndex = 7;
+            this.ButtonBoardSize.Text = "4 X 4";
+            this.ButtonBoardSize.UseVisualStyleBackColor = false;
+            this.ButtonBoardSize.Click += new System.EventHandler(this.ButtonBoardSize_Click);
             // 
-            // button3
+            // ButtonStart
             // 
-            this.button3.Location = new System.Drawing.Point(464, 248);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Start !";
-            this.button3.UseVisualStyleBackColor = true;
+            this.ButtonStart.Location = new System.Drawing.Point(464, 248);
+            this.ButtonStart.Name = "ButtonStart";
+            this.ButtonStart.Size = new System.Drawing.Size(75, 23);
+            this.ButtonStart.TabIndex = 8;
+            this.ButtonStart.Text = "Start !";
+            this.ButtonStart.UseVisualStyleBackColor = true;
             // 
             // MemoryGameSettings
             // 
+            this.AcceptButton = this.ButtonStart;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(556, 286);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.ButtonStart);
+            this.Controls.Add(this.ButtonBoardSize);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.ButtonPlayerChooser);
             this.Controls.Add(this.textBoxSecondPlayerName);
             this.Controls.Add(this.textBoxFirstPlayerName);
             this.Controls.Add(this.label3);
@@ -144,9 +149,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxFirstPlayerName;
         private System.Windows.Forms.TextBox textBoxSecondPlayerName;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button ButtonPlayerChooser;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button ButtonBoardSize;
+        private System.Windows.Forms.Button ButtonStart;
     }
 }

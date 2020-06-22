@@ -48,6 +48,8 @@
       <DependentUpon>MemoryGameSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="GameController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

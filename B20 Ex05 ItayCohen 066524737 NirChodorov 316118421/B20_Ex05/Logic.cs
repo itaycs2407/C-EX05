@@ -6,9 +6,9 @@ namespace B20_Ex02_1
 {
     public class Logic
     {
-        private const int MINIMUM_LENGTH_FOR_GRID = 4;
-        private const int MAXIMUM_LENGTH_FOR_GRID = 6;
-        private const int SAME_CARDS_COUNT = 2;
+        private const int k_MinimumLengthForGrid = 4;
+        private const int k_MaximumLengthForGrid = 6;
+        private const int k_SameCardCount = 2;
         private Random rnd = new Random();
 
         public Cell[,] GameGrid { get => m_GameGrid; set => m_GameGrid = value; }
@@ -34,9 +34,9 @@ namespace B20_Ex02_1
         public void ShuffleGrid()
         {
             int rowGeneratedIndex, colGeneratedIndex;
-            for (int i = 0; i < (GetGridCols() * GetGridRows()) / SAME_CARDS_COUNT; i++)
+            for (int i = 0; i < (GetGridCols() * GetGridRows()) / k_SameCardCount; i++)
             {
-                for (int j = 0; j < SAME_CARDS_COUNT; j++)
+                for (int j = 0; j < k_SameCardCount; j++)
                 {
                     do
                     {
@@ -57,7 +57,7 @@ namespace B20_Ex02_1
 
         public bool TryCreateGrid(int i_Rows, int i_Cols)
         {
-            bool v_IsValid = checkLimits(i_Rows, MINIMUM_LENGTH_FOR_GRID, MAXIMUM_LENGTH_FOR_GRID) && checkLimits(i_Cols, MINIMUM_LENGTH_FOR_GRID, MAXIMUM_LENGTH_FOR_GRID) && ((i_Rows * i_Cols) % 2 == 0);
+            bool v_IsValid = checkLimits(i_Rows, k_MinimumLengthForGrid, k_MaximumLengthForGrid) && checkLimits(i_Cols, k_MinimumLengthForGrid, k_MaximumLengthForGrid) && ((i_Rows * i_Cols) % 2 == 0);
             if (v_IsValid)
             {
                 GameGrid = new Cell[i_Rows, i_Cols];
