@@ -37,5 +37,29 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AiEngine.cs" />
+    <Compile Include="Cell.cs" />
+    <Compile Include="Logic.cs" />
+    <Compile Include="MemoryGameSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MemoryGameSettings.Designer.cs">
+      <DependentUpon>MemoryGameSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Player.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MemoryGameSettings.resx">
+      <DependentUpon>MemoryGameSettings.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

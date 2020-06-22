@@ -16,5 +16,14 @@ namespace B20_Ex05
         {
             InitializeComponent();
         }
+
+        public static void Main()
+        {
+            MemoryGameSettings mem = new MemoryGameSettings();
+            mem.ShowDialog();
+
+        }
+
+      
     }
 }
