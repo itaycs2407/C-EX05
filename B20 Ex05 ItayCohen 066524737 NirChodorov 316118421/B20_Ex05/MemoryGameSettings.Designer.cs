@@ -116,6 +116,7 @@
             this.ButtonStart.TabIndex = 8;
             this.ButtonStart.Text = "Start !";
             this.ButtonStart.UseVisualStyleBackColor = true;
+            this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 
             // MemoryGameSettings
             // 

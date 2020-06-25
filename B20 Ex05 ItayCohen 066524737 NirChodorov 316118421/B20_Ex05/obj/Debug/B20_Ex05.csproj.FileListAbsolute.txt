@@ -7,3 +7,5 @@ C:\Users\Itay Cohen\Desktop\לימודים\שנה ג\סמסטר ב\C#\DN_HIT_202
 C:\Users\Itay Cohen\Desktop\לימודים\שנה ג\סמסטר ב\C#\DN_HIT_2020B_Ex05\B20 Ex05 ItayCohen 066524737 NirChodorov 316118421\B20_Ex05\bin\Debug\B20_Ex05.pdb
 C:\Users\Itay Cohen\Desktop\לימודים\שנה ג\סמסטר ב\C#\DN_HIT_2020B_Ex05\B20 Ex05 ItayCohen 066524737 NirChodorov 316118421\B20_Ex05\obj\Debug\B20_Ex05.exe
 C:\Users\Itay Cohen\Desktop\לימודים\שנה ג\סמסטר ב\C#\DN_HIT_2020B_Ex05\B20 Ex05 ItayCohen 066524737 NirChodorov 316118421\B20_Ex05\obj\Debug\B20_Ex05.pdb
+C:\Users\Itay Cohen\Desktop\לימודים\שנה ג\סמסטר ב\C#\DN_HIT_2020B_Ex05\B20 Ex05 ItayCohen 066524737 NirChodorov 316118421\B20_Ex05\obj\Debug\B20_Ex05.MemoryGame.resources
+C:\Users\Itay Cohen\Desktop\לימודים\שנה ג\סמסטר ב\C#\DN_HIT_2020B_Ex05\B20 Ex05 ItayCohen 066524737 NirChodorov 316118421\B20_Ex05\obj\Debug\B20_Ex05.Properties.Resources.resources
