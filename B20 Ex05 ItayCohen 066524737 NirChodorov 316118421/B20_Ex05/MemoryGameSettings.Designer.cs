@@ -99,6 +99,7 @@
             // ButtonBoardSize
             // 
             this.ButtonBoardSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.ButtonBoardSize.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.ButtonBoardSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.ButtonBoardSize.Location = new System.Drawing.Point(19, 156);
             this.ButtonBoardSize.Name = "ButtonBoardSize";

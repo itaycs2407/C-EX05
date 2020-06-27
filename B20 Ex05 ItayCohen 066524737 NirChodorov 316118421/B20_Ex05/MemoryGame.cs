@@ -1,4 +1,5 @@
-﻿using System;
+﻿using B20_Ex02_1;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,15 +14,50 @@ namespace B20_Ex05
 {
     public partial class MemoryGame : Form
     {
-        public MemoryGame()
+        private List<Button> m_GameButttons = new List<Button>();
+
+        public List<Button> GameButttons { get => m_GameButttons; set => m_GameButttons = value; }
+
+        public MemoryGame(Player playerOne, Player playertwo)
         {
             InitializeComponent();
+            updatePlayersAttOnUI(playerOne, playertwo);
         }
 
+        private void updatePlayersAttOnUI(Player playerOne, Player playertwo)
+        {
+            lblCurrnetPlayer.Text = "Current Player:" + playerOne.Name;
+            lblFirstPlayer.Text = playerOne.Name + ":";
+            lblCurrnetPlayer.BackColor = lblFirstPlayer.BackColor = Color.LightGreen;
+            lblSecondPlayer.Text = playertwo.Name + ":";
+            lblSecondPlayer.BackColor = Color.LightBlue;
+        }
+
+        public void UpdateLblCurrentPlayer(string i_PlayerName, Color i_BackColor)
+        {
+            lblCurrnetPlayer.Text = "Current Player: " + i_PlayerName;
+            lblCurrnetPlayer.BackColor = i_BackColor;
+        }
+
+        public void updateLblFirstPlayer(Player i_Player)
+        {
+            updateLbl(lblFirstPlayer, i_Player);
+        }
+        public void updateLblSecondPlayer(Player i_Player)
+        {
+            updateLbl(lblSecondPlayer, i_Player);
+        }
+
+        private void updateLbl(Label i_LabelToChange, Player i_Player)
+        {
+            string pairSTR = i_Player.NumOfHits == 1 ? "Pair." : "Pairs.";
+            i_LabelToChange.Text = string.Format(@"{0} : {1} {2}", i_Player.Name, i_Player.NumOfHits, pairSTR);
+            i_LabelToChange.BackColor = i_Player.Color;
+        }
 
         public void ShuffleButtons()
         {
-            Button currentButton = new Button();
+            Button currentButton;
             int rows, cols; 
             int startingTop = 19, startingLeft = 12, height = 75, width = 75;
             for (rows = 0; rows < GameController.rows; rows++)
@@ -33,51 +69,34 @@ namespace B20_Ex05
                     currentButton.Left = startingLeft + cols * (startingLeft + width);
                     currentButton.Width = width;
                     currentButton.Height = height;
+                    currentButton.Click += CurrentButton_Click;
+                    currentButton.TabIndex = rows * GameController.rows + cols + 1;
+                    currentButton.FlatStyle = FlatStyle.Flat;
                     currentButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
+                    currentButton.FlatAppearance.BorderSize = 2;
                     currentButton.ForeColor = System.Drawing.Color.Black;
                     currentButton.UseVisualStyleBackColor = true;
+                    GameButttons.Add(currentButton);
                     this.Controls.Add(currentButton);
                 }
                 this.Width = startingLeft + cols * (startingLeft + width) + 20;
             }
 
-            label1.Top = startingTop + rows * (startingTop + height) + 20;
-            label2.Top = label1.Top + label1.Height + 20;
-            label3.Top = label2.Top + label2.Height + 20;
-            this.Height = label2.Top + label2.Height + 120;
+            // set the form bound to fit the button and labels display
+            lblCurrnetPlayer.Top = startingTop + rows * (startingTop + height) + 20;
+            lblFirstPlayer.Top = lblCurrnetPlayer.Top + lblCurrnetPlayer.Height + 20;
+            lblSecondPlayer.Top = lblFirstPlayer.Top + lblFirstPlayer.Height + 20;
+            this.Height = lblFirstPlayer.Top + lblFirstPlayer.Height + 120;
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void CurrentButton_Click(object sender, EventArgs e)
         {
-            //Button currentButton = (sender as Button);
-            //Color col = currentButton.BackColor;
-            //currentButton.BackColor = Color.FromArgb(80, col.R, col.G, col.B);
-            //System.Threading.Thread.Sleep(250);
-            //currentButton.BackColor = Color.FromArgb(20, col.R, col.G, col.B);
-            fadeOutAndIn(sender);
+            //m_ButtonToFade = sender as Button;
+
+            //MessageBox.Show(@"Are you sure ? " + (sender as Button).TabIndex.ToString(),"Message!", MessageBoxButtons.OKCancel);
+            
         }
 
-        private void fadeOutAndIn(object sender)
-        {
-            int i;
-            if ((sender as Button).Text != string.Empty)
-            {
-                Button currentButton = (sender as Button);
-                for (i = 10; i > 0; i--)
-                {
-                    Color col = currentButton.BackColor;
-                    currentButton.BackColor = Color.FromArgb(i*10, col.R, col.G, col.B);
-                    System.Threading.Thread.Sleep(250);
-                }
-                currentButton.Text = "Faded";
-                for (i =0; i <10 ; i++)
-                {
-                    Color col = currentButton.BackColor;
-                    currentButton.BackColor = Color.FromArgb(i * 10, col.R, col.G, col.B);
-                    System.Threading.Thread.Sleep(750);
-                }
-            }
-        }
     }
 }

@@ -28,52 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblCurrnetPlayer = new System.Windows.Forms.Label();
+            this.lblFirstPlayer = new System.Windows.Forms.Label();
+            this.lblSecondPlayer = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // lblCurrnetPlayer
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label1.Location = new System.Drawing.Point(15, 459);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(139, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Current Player :";
+            this.lblCurrnetPlayer.AutoSize = true;
+            this.lblCurrnetPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblCurrnetPlayer.Location = new System.Drawing.Point(15, 459);
+            this.lblCurrnetPlayer.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblCurrnetPlayer.Name = "lblCurrnetPlayer";
+            this.lblCurrnetPlayer.Size = new System.Drawing.Size(139, 24);
+            this.lblCurrnetPlayer.TabIndex = 0;
+            this.lblCurrnetPlayer.Text = "Current Player :";
             // 
-            // label2
+            // lblFirstPlayer
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label2.Location = new System.Drawing.Point(15, 495);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 24);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
+            this.lblFirstPlayer.AutoSize = true;
+            this.lblFirstPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblFirstPlayer.Location = new System.Drawing.Point(15, 495);
+            this.lblFirstPlayer.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblFirstPlayer.Name = "lblFirstPlayer";
+            this.lblFirstPlayer.Size = new System.Drawing.Size(60, 24);
+            this.lblFirstPlayer.TabIndex = 1;
+            this.lblFirstPlayer.Text = "label2";
             // 
-            // label3
+            // lblSecondPlayer
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label3.Location = new System.Drawing.Point(15, 531);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 24);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "label3";
+            this.lblSecondPlayer.AutoSize = true;
+            this.lblSecondPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblSecondPlayer.Location = new System.Drawing.Point(15, 531);
+            this.lblSecondPlayer.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblSecondPlayer.Name = "lblSecondPlayer";
+            this.lblSecondPlayer.Size = new System.Drawing.Size(60, 24);
+            this.lblSecondPlayer.TabIndex = 2;
+            this.lblSecondPlayer.Text = "label3";
             // 
             // MemoryGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 704);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblSecondPlayer);
+            this.Controls.Add(this.lblFirstPlayer);
+            this.Controls.Add(this.lblCurrnetPlayer);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(6);
@@ -88,8 +88,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblCurrnetPlayer;
+        private System.Windows.Forms.Label lblFirstPlayer;
+        private System.Windows.Forms.Label lblSecondPlayer;
     }
 }

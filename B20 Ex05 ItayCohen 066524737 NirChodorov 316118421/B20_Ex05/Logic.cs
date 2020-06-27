@@ -16,6 +16,7 @@ namespace B20_Ex02_1
         public int CurrentActivePlayerId { get => m_CurrentActivePlayerId; set => m_CurrentActivePlayerId = value; }
 
         public bool IsGameOver { get => m_IsGameOver; set => m_IsGameOver = value; }
+        public List<Player> Players { get => m_Players; set => m_Players = value; }
 
         private List<Player> m_Players = null;
         private int m_CurrentActivePlayerId = 0;
@@ -27,7 +28,7 @@ namespace B20_Ex02_1
         public Logic()
         {
             m_AiEngine = new AiEngine();
-            m_Players = new List<Player>();
+            Players = new List<Player>();
             m_OptionalCardsLetters = new List<char>() { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V' };
         }
          
@@ -52,8 +53,19 @@ namespace B20_Ex02_1
 
         public Player GetActivePlayer()
         {
-            return m_Players.Find(ply => ply.Id == m_CurrentActivePlayerId);
+            return Players.Find(ply => ply.Id == m_CurrentActivePlayerId);
         }
+
+        public char GetCellContent(int row, int col)
+        {
+            return m_GameGrid[row, col].Letter;
+        }
+
+        public bool IsCellVisable(int row,int col)
+        {
+            return m_GameGrid[row, col].IsVisable;
+        }
+
 
         public bool TryCreateGrid(int i_Rows, int i_Cols)
         {
@@ -84,14 +96,14 @@ namespace B20_Ex02_1
 
         public void AddNewPlayer(Player i_Player)
         {
-            if (m_Players == null)
+            if (Players == null)
             {
-                m_Players = new List<Player>();
-                m_Players.Add(i_Player);
+                Players = new List<Player>();
+                Players.Add(i_Player);
             }
-            else if (m_Players.Count < 2)
+            else if (Players.Count < 2)
             {
-                m_Players.Add(i_Player);
+                Players.Add(i_Player);
             }
         }
 
@@ -99,7 +111,7 @@ namespace B20_Ex02_1
         {
             int max = 0;
             Player winningPlayer = null;
-            m_Players.ForEach(ply =>
+            Players.ForEach(ply =>
             {
                 if (ply.NumOfHits > max)
                 {
@@ -115,7 +127,7 @@ namespace B20_Ex02_1
         {
             int min = GetGridCols() * GetGridRows() / 2;
             Player losingPlayer = null, winningPlayer = GetWinner();
-            m_Players.ForEach(ply =>
+            Players.ForEach(ply =>
             {
                 if (ply.NumOfHits < min && ply != winningPlayer)
                 {
@@ -247,8 +259,8 @@ namespace B20_Ex02_1
 
         private void updateActivePlayer()
         {
-            int activePlayerIndex = m_Players.FindIndex(ply => ply.Id == CurrentActivePlayerId);
-            CurrentActivePlayerId = (activePlayerIndex + 1 >= m_Players.Count()) ? m_Players[0].Id : m_Players[activePlayerIndex + 1].Id;
+            int activePlayerIndex = Players.FindIndex(ply => ply.Id == CurrentActivePlayerId);
+            CurrentActivePlayerId = (activePlayerIndex + 1 >= Players.Count()) ? Players[0].Id : Players[activePlayerIndex + 1].Id;
         }
 
         private void setCellVisiballity(int i_Row, int i_Col, bool i_isVisible)
@@ -267,7 +279,7 @@ namespace B20_Ex02_1
 
         private void addHit(Player i_Ply)
         {
-            m_Players.FirstOrDefault(ply => ply.Id == i_Ply.Id).NumOfHits++;
+            Players.FirstOrDefault(ply => ply.Id == i_Ply.Id).NumOfHits++;
         }
     }
 }
