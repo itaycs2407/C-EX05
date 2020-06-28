@@ -10,15 +10,15 @@ using System.Windows.Forms;
 
 namespace B20_Ex05
 {
-    class GameController
+    class GameController : IGameControll
     {
         private MemoryGameSettings m_MemoryGameSetting;
         private MemoryGame m_MemoryGame;
-        private static Logic m_GameLogic = new Logic();
-        public static string m_FirstPlayerName;
-        public static string m_SecondPlayerName;
-        public static string m_GridSize;
-        public static int rows , cols;
+        private Logic m_GameLogic = new Logic();
+        public string m_FirstPlayerName;
+        public string m_SecondPlayerName;
+        public string m_GridSize;
+        public int rows , cols;
         int numberOfPick = 1;
         Button firstPick;
 
@@ -36,32 +36,8 @@ namespace B20_Ex05
             m_MemoryGame.ShowDialog();
         }
 
-        public void MakeMove(Button i_ButtonPressed)
-        {
-            if (m_GameLogic.IsGameOn())
-            {
-                // print current state to buttons
-                updateContent();
-                // check for current active player and update the UI.
-                Player currentActivePlayer = m_GameLogic.GetActivePlayer();
-                m_MemoryGame.UpdateLblCurrentPlayer(currentActivePlayer.Name, currentActivePlayer.Color);
-
-                if (currentActivePlayer.IsHuman)
-                {
-                    makeHumanMove(i_ButtonPressed, currentActivePlayer);
-                }
-                else
-                {
-                    makeComputerMove(currentActivePlayer);
-                }
-                // print current state to buttons
-                updateContent();
-            }
-            else
-            {
-                EndGame();
-            }
-        }
+     
+       
 
         private void makeComputerMove(Player currentActivePlayer)
         {
@@ -190,10 +166,6 @@ namespace B20_Ex05
             }
         }
 
-        public static char GetCellContent(int row, int col)
-        {
-            return m_GameLogic.GetCellContent(row,col);
-        }
 
         private void initializeGrid()
         {
@@ -201,5 +173,60 @@ namespace B20_Ex05
             cols = m_GridSize[4]-48;
             m_GameLogic.TryCreateGrid(rows, cols);
         }
+
+        public char GetCellContent(int row, int col)
+        {
+            return m_GameLogic.GetCellContent(row, col);
+        }
+
+        public void MakeMove(Button i_ButtonPressed)
+        {
+            if (m_GameLogic.IsGameOn())
+            {
+                // print current state to buttons
+                updateContent();
+                // check for current active player and update the UI.
+                Player currentActivePlayer = m_GameLogic.GetActivePlayer();
+                m_MemoryGame.UpdateLblCurrentPlayer(currentActivePlayer.Name, currentActivePlayer.Color);
+
+                if (currentActivePlayer.IsHuman)
+                {
+                    makeHumanMove(i_ButtonPressed, currentActivePlayer);
+                }
+                else
+                {
+                    makeComputerMove(currentActivePlayer);
+                }
+                // print current state to buttons
+                updateContent();
+            }
+            else
+            {
+                EndGame();
+            }
+        }
+        public void SetGridSize(string i_SizeSTR)
+        {
+            m_GridSize = i_SizeSTR;
+        }
+
+        public void SetSecondPlayerName(string i_Name)
+        {
+            m_SecondPlayerName = i_Name;
+        }
+
+        public void SetFirstPlayerName(string i_Name)
+        {
+            m_FirstPlayerName = i_Name;
+        }
+        public int GetRows()
+        {
+            return rows;
+        }
+        public int GetCols()
+        {
+            return cols;
+        }
+
     }
 }

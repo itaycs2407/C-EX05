@@ -15,6 +15,7 @@ namespace B20_Ex05
     public partial class MemoryGame : Form
     {
         private List<Button> m_GameButttons = new List<Button>();
+        private IGameControll m_GameControl;
 
         public List<Button> GameButttons { get => m_GameButttons; set => m_GameButttons = value; }
 
@@ -60,9 +61,9 @@ namespace B20_Ex05
             Button currentButton;
             int rows, cols; 
             int startingTop = 19, startingLeft = 12, height = 75, width = 75;
-            for (rows = 0; rows < GameController.rows; rows++)
+            for (rows = 0; rows < m_GameControl.GetRows(); rows++)
             {
-                for (cols = 0; cols < GameController.cols; cols++)
+                for (cols = 0; cols < m_GameControl.GetCols(); cols++)
                 {
                     currentButton = new Button(); 
                     currentButton.Top = startingTop + rows *(startingTop + height);
@@ -70,7 +71,7 @@ namespace B20_Ex05
                     currentButton.Width = width;
                     currentButton.Height = height;
                     currentButton.Click += CurrentButton_Click;
-                    currentButton.TabIndex = rows * GameController.rows + cols + 1;
+                    currentButton.TabIndex = rows * m_GameControl.GetRows() + cols + 1;
                     currentButton.FlatStyle = FlatStyle.Flat;
                     currentButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
                     currentButton.FlatAppearance.BorderSize = 2;
@@ -92,11 +93,12 @@ namespace B20_Ex05
 
         private void CurrentButton_Click(object sender, EventArgs e)
         {
+            m_GameControl.MakeMove(sender as Button);
             //m_ButtonToFade = sender as Button;
 
             //MessageBox.Show(@"Are you sure ? " + (sender as Button).TabIndex.ToString(),"Message!", MessageBoxButtons.OKCancel);
-            
-        }
+
+    }
 
     }
 }

@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="AiEngine.cs" />
     <Compile Include="Cell.cs" />
+    <Compile Include="IGameControll.cs" />
     <Compile Include="Logic.cs" />
     <Compile Include="MemoryGame.cs">
       <SubType>Form</SubType>

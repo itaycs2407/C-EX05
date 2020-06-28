@@ -15,11 +15,13 @@ namespace B20_Ex05
         private bool m_ComputerPlayer = !true;
         private string[] m_BoardSize = new string[]{"4 X 4","4 X 5","4 X 6","5 X 4","5 X 6","6 X 4","6 X 5","6 X 6"};
         private int i=1;
+        private IGameControll m_GameControl;
 
         public MemoryGameSettings()
         {
             InitializeComponent();
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -36,15 +38,23 @@ namespace B20_Ex05
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            GameController.m_FirstPlayerName = textBoxFirstPlayerName.Text;
-            GameController.m_SecondPlayerName = textBoxSecondPlayerName.Text;
+            m_GameControl.SetFirstPlayerName(textBoxFirstPlayerName.Text.ToString());
+            //GameController.m_FirstPlayerName = textBoxFirstPlayerName.Text;
+            m_GameControl.SetSecondPlayerName(textBoxSecondPlayerName.Text.ToString());
+            //GameController.m_SecondPlayerName = textBoxSecondPlayerName.Text;
             if (textBoxSecondPlayerName.Text == "-Computer-")
             {
-                GameController.m_SecondPlayerName = string.Empty;
+                m_GameControl.SetSecondPlayerName(string.Empty);
+               // GameController.m_SecondPlayerName = string.Empty;
             }
-            GameController.m_GridSize = ButtonBoardSize.Text;
+            m_GameControl.SetGridSize(ButtonBoardSize.Text.ToString());
+            //GameController.m_GridSize = ButtonBoardSize.Text;
             this.Close();
-
         }
+
+       
+
+
+
     }
 }
