@@ -22,6 +22,7 @@ namespace B20_Ex05
             InitializeComponent();
         }
 
+        internal IGameControll GameControl { get => m_GameControl; set => m_GameControl = value; }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -38,16 +39,16 @@ namespace B20_Ex05
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            m_GameControl.SetFirstPlayerName(textBoxFirstPlayerName.Text.ToString());
+            GameControl.SetFirstPlayerName(textBoxFirstPlayerName.Text.ToString());
             //GameController.m_FirstPlayerName = textBoxFirstPlayerName.Text;
-            m_GameControl.SetSecondPlayerName(textBoxSecondPlayerName.Text.ToString());
+            GameControl.SetSecondPlayerName(textBoxSecondPlayerName.Text.ToString());
             //GameController.m_SecondPlayerName = textBoxSecondPlayerName.Text;
             if (textBoxSecondPlayerName.Text == "-Computer-")
             {
-                m_GameControl.SetSecondPlayerName(string.Empty);
+                GameControl.SetSecondPlayerName(string.Empty);
                // GameController.m_SecondPlayerName = string.Empty;
             }
-            m_GameControl.SetGridSize(ButtonBoardSize.Text.ToString());
+            GameControl.SetGridSize(ButtonBoardSize.Text.ToString());
             //GameController.m_GridSize = ButtonBoardSize.Text;
             this.Close();
         }

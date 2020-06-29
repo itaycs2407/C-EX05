@@ -15,7 +15,7 @@ namespace B20_Ex05
     public partial class MemoryGame : Form
     {
         private List<Button> m_GameButttons = new List<Button>();
-        private IGameControll m_GameControl;
+        public IGameControll m_GameControl;
 
         public List<Button> GameButttons { get => m_GameButttons; set => m_GameButttons = value; }
 
@@ -71,7 +71,7 @@ namespace B20_Ex05
                     currentButton.Width = width;
                     currentButton.Height = height;
                     currentButton.Click += CurrentButton_Click;
-                    currentButton.TabIndex = rows * m_GameControl.GetRows() + cols + 1;
+                    currentButton.TabIndex = rows * m_GameControl.GetRows() + cols;
                     currentButton.FlatStyle = FlatStyle.Flat;
                     currentButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
                     currentButton.FlatAppearance.BorderSize = 2;
@@ -100,5 +100,6 @@ namespace B20_Ex05
 
     }
 
+       
     }
 }

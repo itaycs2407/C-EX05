@@ -25,12 +25,14 @@ namespace B20_Ex05
         public GameController()
         {
             m_MemoryGameSetting = new MemoryGameSettings();
+            m_MemoryGameSetting.GameControl = this;
         }
         public void Run()
         {
             m_MemoryGameSetting.ShowDialog();
             initializePlayers();
             m_MemoryGame = new MemoryGame(m_GameLogic.Players[0], m_GameLogic.Players[1]);
+            m_MemoryGame.m_GameControl = this;
             initializeGrid();
             m_MemoryGame.ShuffleButtons();
             m_MemoryGame.ShowDialog();
@@ -80,13 +82,15 @@ namespace B20_Ex05
                 }
                 else
                 {
+                    i_ButtonPressed.Text = GetCellContent(buttonPressedRow, buttonPressedCol).ToString();
                     // wait for one second
                     System.Threading.Thread.Sleep(1000);
+                    i_ButtonPressed.Text = string.Empty;
                 }
             }
         }
 
-        private void setButtonBorderColorAfterHit(int i_Row, int i_Col, Player currentActivePlayer)
+        private void  setButtonBorderColorAfterHit(int i_Row, int i_Col, Player currentActivePlayer)
         {
             int buttonTabIndex = i_Row * rows + i_Col;
             m_MemoryGame.GameButttons.ForEach(btn =>
@@ -145,12 +149,12 @@ namespace B20_Ex05
 
         private int getRowCordForButton(Button i_Button)
         {
-            return i_Button.TabIndex / rows;
+            return (i_Button.TabIndex / rows);
         }
 
         private int getColCordForButton(Button i_Button)
         {
-            return i_Button.TabIndex % cols;
+            return (i_Button.TabIndex % cols);
         }
 
         private void initializePlayers()
@@ -179,7 +183,7 @@ namespace B20_Ex05
             return m_GameLogic.GetCellContent(row, col);
         }
 
-        public void MakeMove(Button i_ButtonPressed)
+         void IGameControll.MakeMove(Button i_ButtonPressed)
         {
             if (m_GameLogic.IsGameOn())
             {
@@ -195,7 +199,8 @@ namespace B20_Ex05
                 }
                 else
                 {
-                    makeComputerMove(currentActivePlayer);
+                    makeHumanMove(i_ButtonPressed, currentActivePlayer);
+                    //makeComputerMove(currentActivePlayer);
                 }
                 // print current state to buttons
                 updateContent();
@@ -205,28 +210,29 @@ namespace B20_Ex05
                 EndGame();
             }
         }
-        public void SetGridSize(string i_SizeSTR)
+         void IGameControll.SetGridSize(string i_SizeSTR)
         {
             m_GridSize = i_SizeSTR;
         }
 
-        public void SetSecondPlayerName(string i_Name)
+         void IGameControll.SetSecondPlayerName(string i_Name)
         {
             m_SecondPlayerName = i_Name;
         }
 
-        public void SetFirstPlayerName(string i_Name)
+         void IGameControll.SetFirstPlayerName(string i_Name)
         {
             m_FirstPlayerName = i_Name;
         }
-        public int GetRows()
+         int IGameControll.GetRows()
         {
             return rows;
         }
-        public int GetCols()
+         int IGameControll.GetCols()
         {
             return cols;
         }
+       
 
     }
 }
