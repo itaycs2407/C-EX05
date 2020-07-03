@@ -59,6 +59,7 @@ namespace B20_Ex02_1
         public char GetCellContent(int row, int col)
         {
             return m_GameGrid[row, col].Letter;
+
         }
 
         public bool IsCellVisable(int row,int col)
@@ -263,7 +264,7 @@ namespace B20_Ex02_1
             CurrentActivePlayerId = (activePlayerIndex + 1 >= Players.Count()) ? Players[0].Id : Players[activePlayerIndex + 1].Id;
         }
 
-        private void setCellVisiballity(int i_Row, int i_Col, bool i_isVisible)
+        public void setCellVisiballity(int i_Row, int i_Col, bool i_isVisible)
         {
             if(checkLimits(i_Row, 0, GetGridRows()) && checkLimits(i_Row, 0, GetGridCols()))
             {

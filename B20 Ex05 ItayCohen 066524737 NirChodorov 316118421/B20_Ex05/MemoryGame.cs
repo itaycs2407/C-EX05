@@ -52,7 +52,7 @@ namespace B20_Ex05
         private void updateLbl(Label i_LabelToChange, Player i_Player)
         {
             string pairSTR = i_Player.NumOfHits == 1 ? "Pair." : "Pairs.";
-            i_LabelToChange.Text = string.Format(@"{0} : {1} {2}", i_Player.Name, i_Player.NumOfHits, pairSTR);
+            i_LabelToChange.Text = string.Format(@"{0} : {1} {2}", i_Player.Name, i_Player.NumOfHits / 2, pairSTR);
             i_LabelToChange.BackColor = i_Player.Color;
         }
 
@@ -73,9 +73,8 @@ namespace B20_Ex05
                     currentButton.Click += CurrentButton_Click;
                     currentButton.TabIndex = rows * m_GameControl.GetRows() + cols;
                     currentButton.FlatStyle = FlatStyle.Flat;
-                    currentButton.FlatAppearance.BorderColor = System.Drawing.Color.White;
-                    currentButton.FlatAppearance.BorderSize = 2;
-                    currentButton.ForeColor = System.Drawing.Color.Black;
+                    currentButton.FlatAppearance.BorderSize = 1;
+                    currentButton.ForeColor = System.Drawing.Color.Gray;
                     currentButton.UseVisualStyleBackColor = true;
                     GameButttons.Add(currentButton);
                     this.Controls.Add(currentButton);
@@ -88,18 +87,16 @@ namespace B20_Ex05
             lblFirstPlayer.Top = lblCurrnetPlayer.Top + lblCurrnetPlayer.Height + 20;
             lblSecondPlayer.Top = lblFirstPlayer.Top + lblFirstPlayer.Height + 20;
             this.Height = lblFirstPlayer.Top + lblFirstPlayer.Height + 120;
-
         }
 
         private void CurrentButton_Click(object sender, EventArgs e)
         {
-            m_GameControl.MakeMove(sender as Button);
-            //m_ButtonToFade = sender as Button;
-
-            //MessageBox.Show(@"Are you sure ? " + (sender as Button).TabIndex.ToString(),"Message!", MessageBoxButtons.OKCancel);
-
-    }
-
-       
+            Button pressedButton = sender as Button;
+            // check if the button wasnt press before
+            if (pressedButton.Text == string.Empty)
+            {
+                m_GameControl.MakeMove(pressedButton);
+            }
+        }
     }
 }
