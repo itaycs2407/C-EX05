@@ -1,11 +1,6 @@
 ﻿using B20_Ex02_1;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace B20_Ex05
@@ -72,48 +67,38 @@ namespace B20_Ex05
                 if (m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol))
                 {
                     firstPick = i_ButtonPressed;
+                    m_MemoryGame.m_GoodPick = true;
                     numberOfPick = !numberOfPick;
                 }
             }
             else
             {
-                if ( m_GameLogic.TryUpdateForEquality(getRowCordForButton(firstPick), getColCordForButton(firstPick), buttonPressedRow, buttonPressedCol))
+                if (m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol))
                 {
-                    currentActivePlayer.NumOfHits++;
-                    // change buttons border color to the color of the active player
-                    setButtonBorderColorAfterHit(firstPick, currentActivePlayer);
-                    setButtonBorderColorAfterHit(i_ButtonPressed, currentActivePlayer);
-                }
-                else
-                {
-                    m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol);
-                    m_MemoryGame.Text = i_ButtonPressed.TabIndex.ToString();
-                    // need to check the logic
-                    Button currButton = new Button(); ;
-                    foreach  (Object btn in m_MemoryGame.Controls)
+                    if (m_GameLogic.TryUpdateForEquality(getRowCordForButton(firstPick), getColCordForButton(firstPick), buttonPressedRow, buttonPressedCol))
                     {
-                        if ((btn is Button) && ((btn as Button).TabIndex == i_ButtonPressed.TabIndex))
-                        {
-                            currButton = btn as Button;
-                        }
+                        // change buttons border color to the color of the active player
+                        setButtonBorderColorAfterHit(firstPick, currentActivePlayer);
+                        setButtonBorderColorAfterHit(i_ButtonPressed, currentActivePlayer);
                     }
-                    currButton.Text = "itay";
-
-
-
-
-                    // wait for one second
-                    updateContent();
-                    System.Threading.Thread.Sleep(1000);
-                    m_GameLogic.setCellVisiballity(buttonPressedRow, buttonPressedCol, !true);
-                    i_ButtonPressed.Text = ":";
-                    updateContent();
-                    // i_ButtonPressed.Text = string.Empty;
-                }
+                    else
+                    {
+                       // m_GameLogic.TryFlipCard(getRowCordForButton(firstPick), getColCordForButton(firstPick));
+                       // m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol);
+                        m_MemoryGame.m_GoodPick = !true;
+                    }
                 numberOfPick = !numberOfPick;
+                }
             }
         }
-
+        void IGameControll.VisableOff(Button i_PressedButton)
+        {
+            int buttonPressedRow = getRowCordForButton(i_PressedButton);
+            int buttonPressedCol = getColCordForButton(i_PressedButton);
+            m_GameLogic.setCellVisiballity(getRowCordForButton(firstPick), getColCordForButton(firstPick),!true);
+            m_GameLogic.setCellVisiballity(buttonPressedRow, buttonPressedCol, !true) ;
+           // i_PressedButton.Text = string.Empty;
+        }
         private void  setButtonBorderColorAfterHit(int i_Row, int i_Col, Player currentActivePlayer)
         {
             int buttonTabIndex = i_Row * rows + i_Col;
@@ -132,7 +117,7 @@ namespace B20_Ex05
             i_Button.FlatAppearance.BorderSize = 3;
         }
 
-        private void updateContent()
+        public void UpdateContent()
         {
             // update button
             m_MemoryGame.GameButttons.ForEach(btn =>
@@ -148,12 +133,8 @@ namespace B20_Ex05
             });
 
             // update labels
-
             m_MemoryGame.updateLblFirstPlayer(m_GameLogic.Players[0]);
             m_MemoryGame.updateLblSecondPlayer(m_GameLogic.Players[1]);
-
-
-
         }
 
         private void EndGame()
@@ -163,13 +144,17 @@ namespace B20_Ex05
             // get details for the winner and looser.
             Player winner = m_GameLogic.GetWinner();
             Player looser = m_GameLogic.GetLoser();
-            string announceTheScoreMSG = string.Format(@"{0}, you are the winner with {1} points!!.{2}{3}, you are the looser with {4} points.", winner.Name, winner.NumOfHits/2, Environment.NewLine, looser.Name, looser.NumOfHits/2);
+            string announceTheScoreMSG = string.Format(@"{0}, you are the winner with {1} points!!.{2}{3}, you are the looser with {4} points.", winner.Name, winner.NumOfHits, Environment.NewLine, looser.Name, looser.NumOfHits);
             string endOfTheGameMSG = string.Format(@"Press Yes to play new game, or No to Exit");
             // put message dialog with the detail.
             MessageBox.Show(announceTheScoreMSG, "Scores !!!", MessageBoxButtons.OK);
             // put exit dialog
-            MessageBox.Show(endOfTheGameMSG, "GoodBye ?", MessageBoxButtons.YesNo);
+            if (MessageBox.Show(endOfTheGameMSG, "GoodBye ?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+               Run();
+            }
             //TODO : logic for the new game ? yes or no
+            
         }
 
         private int getRowCordForButton(Button i_Button)
@@ -210,8 +195,6 @@ namespace B20_Ex05
 
          void IGameControll.MakeMove(Button i_ButtonPressed)
         {
-            bool gameOn = m_GameLogic.IsGameOn();
-            
                 Player currentActivePlayer = m_GameLogic.GetActivePlayer();
                 if (currentActivePlayer.IsHuman)
                 {
@@ -225,14 +208,7 @@ namespace B20_Ex05
                 // check for current active player and update the UI.
                 currentActivePlayer = m_GameLogic.GetActivePlayer();
                 m_MemoryGame.UpdateLblCurrentPlayer(currentActivePlayer.Name, currentActivePlayer.Color);
-
-                // print current state to buttons
-                updateContent();
-            
-            if (!gameOn)
-            {
-                EndGame();
-            }
+           
             
         }
          void IGameControll.SetGridSize(string i_SizeSTR)
@@ -257,7 +233,22 @@ namespace B20_Ex05
         {
             return cols;
         }
-       
 
+        public bool GetVisavilityOfCell(Button i_PressedButton)
+        {
+            int buttonPressedRow = getRowCordForButton(i_PressedButton);
+            int buttonPressedCol = getColCordForButton(i_PressedButton);
+            return m_GameLogic.IsCellVisable(buttonPressedRow, buttonPressedCol);
+        }
+
+        public bool IsGameOn()
+        {
+            return m_GameLogic.IsGameOn();
+        }
+
+        public void EndGameMsg()
+        {
+            EndGame();
+        }
     }
 }

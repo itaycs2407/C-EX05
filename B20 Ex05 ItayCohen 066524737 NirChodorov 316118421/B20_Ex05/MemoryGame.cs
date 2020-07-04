@@ -1,13 +1,7 @@
 ﻿using B20_Ex02_1;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace B20_Ex05
@@ -15,6 +9,7 @@ namespace B20_Ex05
     public partial class MemoryGame : Form
     {
         private List<Button> m_GameButttons = new List<Button>();
+        public bool m_GoodPick = false;
         public IGameControll m_GameControl;
 
         public List<Button> GameButttons { get => m_GameButttons; set => m_GameButttons = value; }
@@ -52,7 +47,7 @@ namespace B20_Ex05
         private void updateLbl(Label i_LabelToChange, Player i_Player)
         {
             string pairSTR = i_Player.NumOfHits == 1 ? "Pair." : "Pairs.";
-            i_LabelToChange.Text = string.Format(@"{0} : {1} {2}", i_Player.Name, i_Player.NumOfHits / 2, pairSTR);
+            i_LabelToChange.Text = string.Format(@"{0} : {1} {2}", i_Player.Name, i_Player.NumOfHits , pairSTR);
             i_LabelToChange.BackColor = i_Player.Color;
         }
 
@@ -92,11 +87,33 @@ namespace B20_Ex05
         private void CurrentButton_Click(object sender, EventArgs e)
         {
             Button pressedButton = sender as Button;
+            m_GameControl.UpdateContent();
+
             // check if the button wasnt press before
-            if (pressedButton.Text == string.Empty)
+            bool isTheButtonVisable = m_GameControl.GetVisavilityOfCell(sender as Button);
+            if (!isTheButtonVisable)
             {
                 m_GameControl.MakeMove(pressedButton);
             }
+            
+            m_GameControl.UpdateContent();
+            if (!m_GoodPick)
+            {
+                Application.DoEvents();
+                System.Threading.Thread.Sleep(500);
+                m_GameControl.VisableOff(pressedButton);
+                m_GameControl.UpdateContent();
+                Application.DoEvents();
+            }
+            checkIfGameEnded();
+        }
+
+        private void checkIfGameEnded()
+        {
+           if (!m_GameControl.IsGameOn())
+            {
+                m_GameControl.EndGameMsg();
+            }
         }
     }
-}
+    }

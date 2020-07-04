@@ -11,9 +11,10 @@ namespace B20_Ex05
         void SetFirstPlayerName(string i_Name);
         int GetRows();
         int GetCols();
-     
-
-
-
+        void VisableOff(Button sender);
+        void UpdateContent();
+        bool GetVisavilityOfCell(Button button);
+        bool IsGameOn();
+        void EndGameMsg();
     }
 }
