@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace B20_Ex02_1
 {
@@ -35,8 +37,10 @@ namespace B20_Ex02_1
         public void ShuffleGrid()
         {
             int rowGeneratedIndex, colGeneratedIndex;
+            PictureBox tempPB = new PictureBox();
             for (int i = 0; i < (GetGridCols() * GetGridRows()) / k_SameCardCount; i++)
             {
+                tempPB.Load(@"https://picsum.photos/80");
                 for (int j = 0; j < k_SameCardCount; j++)
                 {
                     do
@@ -46,7 +50,7 @@ namespace B20_Ex02_1
                     } 
                     while (m_GameGrid[rowGeneratedIndex, colGeneratedIndex] != null);
 
-                    m_GameGrid[rowGeneratedIndex, colGeneratedIndex] = new Cell(m_OptionalCardsLetters[i], !true);
+                    m_GameGrid[rowGeneratedIndex, colGeneratedIndex] = new Cell(m_OptionalCardsLetters[i], !true, tempPB.Image);
                 }
             }
         }
@@ -56,10 +60,14 @@ namespace B20_Ex02_1
             return Players.Find(ply => ply.Id == m_CurrentActivePlayerId);
         }
 
-        public char GetCellContent(int row, int col)
+        public char GetCellContent(int i_Row, int i_Col)
         {
-            return m_GameGrid[row, col].Letter;
+            return m_GameGrid[i_Row, i_Col].Letter;
+        }
 
+        public Image GetCellImg(int i_Row, int i_Col)
+        {
+            return m_GameGrid[i_Row, i_Col].ButtonBackImg;
         }
 
         public bool IsCellVisable(int row,int col)

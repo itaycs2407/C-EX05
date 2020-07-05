@@ -1,6 +1,7 @@
 ﻿using B20_Ex02_1;
 using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace B20_Ex05
@@ -19,11 +20,11 @@ namespace B20_Ex05
 
         public GameController()
         {
-            m_MemoryGameSetting = new MemoryGameSettings();
-            m_MemoryGameSetting.GameControl = this;
         }
         public void Run()
         {
+            m_MemoryGameSetting = new MemoryGameSettings();
+            m_MemoryGameSetting.GameControl = this;
             m_MemoryGameSetting.ShowDialog();
             initializePlayers();
             m_MemoryGame = new MemoryGame(m_GameLogic.Players[0], m_GameLogic.Players[1]);
@@ -99,7 +100,7 @@ namespace B20_Ex05
             m_GameLogic.setCellVisiballity(buttonPressedRow, buttonPressedCol, !true) ;
            // i_PressedButton.Text = string.Empty;
         }
-        private void  setButtonBorderColorAfterHit(int i_Row, int i_Col, Player currentActivePlayer)
+        private void setButtonBorderColorAfterHit(int i_Row, int i_Col, Player currentActivePlayer)
         {
             int buttonTabIndex = i_Row * rows + i_Col;
             m_MemoryGame.GameButttons.ForEach(btn =>
@@ -124,23 +125,24 @@ namespace B20_Ex05
             {
                 if (m_GameLogic.IsCellVisable(getRowCordForButton(btn), getColCordForButton(btn)))
                 {
-                    btn.Text = GetCellContent(getRowCordForButton(btn), getColCordForButton(btn)).ToString();
+                    btn.Image = GetCellImg(getRowCordForButton(btn), getColCordForButton(btn));
                 }
                 else
                 {
-                    btn.Text = string.Empty;
+                    btn.Image = null;
                 }
             });
 
             // update labels
             m_MemoryGame.updateLblFirstPlayer(m_GameLogic.Players[0]);
             m_MemoryGame.updateLblSecondPlayer(m_GameLogic.Players[1]);
+
+            // update UI
+            Application.DoEvents();
         }
 
         private void EndGame()
         {
-            // close the game form
-            m_MemoryGame.Close();
             // get details for the winner and looser.
             Player winner = m_GameLogic.GetWinner();
             Player looser = m_GameLogic.GetLoser();
@@ -151,9 +153,13 @@ namespace B20_Ex05
             // put exit dialog
             if (MessageBox.Show(endOfTheGameMSG, "GoodBye ?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-               Run();
+                //TODO : close the game form
+                Run();
             }
-            //TODO : logic for the new game ? yes or no
+            else
+            {
+                Application.Exit();
+            }
             
         }
 
@@ -193,6 +199,11 @@ namespace B20_Ex05
             return m_GameLogic.GetCellContent(i_Row, i_Col);
         }
 
+        public Image GetCellImg(int i_Row, int i_Col)
+        {
+            return m_GameLogic.GetCellImg(i_Row, i_Col);
+        }
+
          void IGameControll.MakeMove(Button i_ButtonPressed)
         {
                 Player currentActivePlayer = m_GameLogic.GetActivePlayer();
@@ -203,6 +214,7 @@ namespace B20_Ex05
                 else
                 {
                     makeHumanMove(i_ButtonPressed, currentActivePlayer);
+                    // ONLY FOR CHECK : disabled the computer moves
                     //makeComputerMove(currentActivePlayer);
                 }
                 // check for current active player and update the UI.

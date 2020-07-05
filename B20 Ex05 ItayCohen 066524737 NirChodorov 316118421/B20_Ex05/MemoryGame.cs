@@ -22,10 +22,10 @@ namespace B20_Ex05
 
         private void updatePlayersAttOnUI(Player playerOne, Player playertwo)
         {
-            lblCurrnetPlayer.Text = "Current Player:" + playerOne.Name;
-            lblFirstPlayer.Text = playerOne.Name + ":";
+            lblCurrnetPlayer.Text = "Current Player: " + playerOne.Name;
+            lblFirstPlayer.Text = string.Format(@"{0} : 0 Pairs.", playerOne.Name);
             lblCurrnetPlayer.BackColor = lblFirstPlayer.BackColor = Color.LightGreen;
-            lblSecondPlayer.Text = playertwo.Name + ":";
+            lblSecondPlayer.Text = string.Format(@"{0} : 0 Pairs.", playertwo.Name);
             lblSecondPlayer.BackColor = Color.LightBlue;
         }
 
@@ -55,7 +55,7 @@ namespace B20_Ex05
         {
             Button currentButton;
             int rows, cols; 
-            int startingTop = 19, startingLeft = 12, height = 75, width = 75;
+            const int startingTop = 19, startingLeft = 12, height = 80, width = 80;
             for (rows = 0; rows < m_GameControl.GetRows(); rows++)
             {
                 for (cols = 0; cols < m_GameControl.GetCols(); cols++)
@@ -69,7 +69,7 @@ namespace B20_Ex05
                     currentButton.TabIndex = rows * m_GameControl.GetRows() + cols;
                     currentButton.FlatStyle = FlatStyle.Flat;
                     currentButton.FlatAppearance.BorderSize = 1;
-                    currentButton.ForeColor = System.Drawing.Color.Gray;
+                    currentButton.ForeColor = System.Drawing.Color.Black;
                     currentButton.UseVisualStyleBackColor = true;
                     GameButttons.Add(currentButton);
                     this.Controls.Add(currentButton);
@@ -99,11 +99,9 @@ namespace B20_Ex05
             m_GameControl.UpdateContent();
             if (!m_GoodPick)
             {
-                Application.DoEvents();
                 System.Threading.Thread.Sleep(500);
                 m_GameControl.VisableOff(pressedButton);
                 m_GameControl.UpdateContent();
-                Application.DoEvents();
             }
             checkIfGameEnded();
         }
@@ -115,5 +113,6 @@ namespace B20_Ex05
                 m_GameControl.EndGameMsg();
             }
         }
+
     }
     }

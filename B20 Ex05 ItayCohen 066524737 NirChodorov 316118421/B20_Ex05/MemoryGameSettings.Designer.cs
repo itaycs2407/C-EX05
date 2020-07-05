@@ -84,7 +84,7 @@
             this.ButtonPlayerChooser.TabIndex = 5;
             this.ButtonPlayerChooser.Text = "Against a Friend";
             this.ButtonPlayerChooser.UseVisualStyleBackColor = true;
-            this.ButtonPlayerChooser.Click += new System.EventHandler(this.button1_Click);
+            this.ButtonPlayerChooser.Click += new System.EventHandler(this.PlayerSelect_Click);
             // 
             // label2
             // 
@@ -124,6 +124,7 @@
             this.AcceptButton = this.ButtonStart;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.ButtonStart;
             this.ClientSize = new System.Drawing.Size(556, 286);
             this.Controls.Add(this.ButtonStart);
             this.Controls.Add(this.ButtonBoardSize);
@@ -140,6 +141,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Memory Game - Settings";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MemoryGameSettings_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -13,7 +13,7 @@ namespace B20_Ex02_1
         private string m_Name;
         private int m_NumOfHits;
         private bool m_IsHuman = !true;
-        private Color m_color;
+        private Color m_Color;
 
         public Player(int i_Id, string i_Name, bool i_IsHuman, Color i_Color)
         {
@@ -21,7 +21,7 @@ namespace B20_Ex02_1
             m_Name = i_Name;
             m_IsHuman = i_IsHuman;
             m_NumOfHits = 0;
-            m_color = i_Color;
+            m_Color = i_Color;
         }
 
         public int NumOfHits { get => m_NumOfHits; set => m_NumOfHits = value; }
@@ -31,6 +31,6 @@ namespace B20_Ex02_1
         public string Name { get => m_Name; }
 
         public int Id { get => m_Id; }
-        public Color Color { get => m_color; set => m_color = value; }
+        public Color Color { get => m_Color; set => m_Color = value; }
     }
 }

@@ -24,7 +24,7 @@ namespace B20_Ex05
 
         internal IGameControll GameControl { get => m_GameControl; set => m_GameControl = value; }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void PlayerSelect_Click(object sender, EventArgs e)
         {
             textBoxSecondPlayerName.Text = m_ComputerPlayer ? "-Computer-" : String.Empty;
             textBoxSecondPlayerName.Enabled = !m_ComputerPlayer;
@@ -39,23 +39,24 @@ namespace B20_Ex05
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
+            startGame();
+        }
+
+        private void startGame()
+        {
             GameControl.SetFirstPlayerName(textBoxFirstPlayerName.Text.ToString());
-            //GameController.m_FirstPlayerName = textBoxFirstPlayerName.Text;
             GameControl.SetSecondPlayerName(textBoxSecondPlayerName.Text.ToString());
-            //GameController.m_SecondPlayerName = textBoxSecondPlayerName.Text;
             if (textBoxSecondPlayerName.Text == "-Computer-")
             {
                 GameControl.SetSecondPlayerName(string.Empty);
-               // GameController.m_SecondPlayerName = string.Empty;
             }
             GameControl.SetGridSize(ButtonBoardSize.Text.ToString());
-            //GameController.m_GridSize = ButtonBoardSize.Text;
             this.Close();
         }
 
-       
-
-
-
+        private void MemoryGameSettings_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            startGame();
+        }
     }
 }
