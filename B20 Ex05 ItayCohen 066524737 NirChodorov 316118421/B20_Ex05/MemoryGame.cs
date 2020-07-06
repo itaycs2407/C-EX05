@@ -87,21 +87,26 @@ namespace B20_Ex05
         private void CurrentButton_Click(object sender, EventArgs e)
         {
             Button pressedButton = sender as Button;
-            m_GameControl.UpdateContent();
+            
 
             // check if the button wasnt press before
             bool isTheButtonVisable = m_GameControl.GetVisavilityOfCell(sender as Button);
             if (!isTheButtonVisable)
             {
-                
-                m_GameControl.MakeMove(pressedButton);
+                workOnCard(pressedButton);
             }
             m_GameControl.UpdateContent();
-
-            System.Threading.Thread.Sleep(500);
-
             checkIfGameEnded();
             tryPlayComputerTurn();
+            checkIfGameEnded();
+        }
+
+        private void workOnCard(Button i_button)
+        {
+            m_GameControl.TryFlipCard(i_button);
+            m_GameControl.UpdateContent();
+            System.Threading.Thread.Sleep(500);
+            m_GameControl.MakeMove(i_button);
         }
 
         private void tryPlayComputerTurn()

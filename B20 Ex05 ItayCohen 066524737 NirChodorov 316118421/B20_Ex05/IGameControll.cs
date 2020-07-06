@@ -17,5 +17,6 @@ namespace B20_Ex05
         bool IsGameOn();
         void EndGameMsg();
         bool IsCurrentActiePlayerComputer();
+        bool TryFlipCard(Button i_buttonToFlip);
     }
 }

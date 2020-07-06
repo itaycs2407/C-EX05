@@ -35,14 +35,21 @@ namespace B20_Ex05
         }
 
      
-       
+       public bool TryFlipCard(Button i_buttonToFlip)
+        {            // get buttonPressed cords
+            int buttonPressedRow = getRowCordForButton(i_buttonToFlip);
+            int buttonPressedCol = getColCordForButton(i_buttonToFlip);
+
+            return m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol);
+        }
 
         private void makeComputerMove(Player currentActivePlayer)
         {
             int[] computerGuess = m_GameLogic.MakeComputerMove();
+            UpdateContent();
             if (m_GameLogic.TryUpdateForEquality(computerGuess[0], computerGuess[1], computerGuess[2], computerGuess[3]))
             {
-                currentActivePlayer.NumOfHits++;
+               // currentActivePlayer.NumOfHits++;
                 // change buttons border color to the color of the active player
                 setButtonBorderColorAfterHit(computerGuess[0], computerGuess[1], currentActivePlayer);
                 setButtonBorderColorAfterHit(computerGuess[2], computerGuess[3], currentActivePlayer);
@@ -57,6 +64,26 @@ namespace B20_Ex05
 
         }
 
+        void IGameControll.MakeMove(Button i_ButtonPressed)
+        {
+            Player currentActivePlayer = m_GameLogic.GetActivePlayer();
+            if (currentActivePlayer.IsHuman)
+            {
+                makeHumanMove(i_ButtonPressed, currentActivePlayer);
+            }
+            else
+            {
+                //makeHumanMove(i_ButtonPressed, currentActivePlayer);
+                // ONLY FOR CHECK : disabled the computer moves
+                makeComputerMove(currentActivePlayer);
+            }
+            // check for current active player and update the UI.
+            currentActivePlayer = m_GameLogic.GetActivePlayer();
+            m_MemoryGame.UpdateLblCurrentPlayer(currentActivePlayer.Name, currentActivePlayer.Color);
+
+
+        }
+
         private void makeHumanMove(Button i_ButtonPressed, Player currentActivePlayer)
         {
             // get buttonPressed cords
@@ -64,38 +91,29 @@ namespace B20_Ex05
             int buttonPressedCol = getColCordForButton(i_ButtonPressed);
 
             //i_ButtonPressed.Text = GetCellContent(buttonPressedRow, buttonPressedCol).ToString();
-            // try flip card
             if (numberOfPick)
             {
-                if (m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol))
-                {
-                    firstPick = i_ButtonPressed;
-                    m_MemoryGame.m_GoodPick = true;
-                    //CR::WTF?!?!?!
-                    numberOfPick = !numberOfPick;
-                    //CR::WTF?!?!?!
-                }
+                firstPick = i_ButtonPressed;
+                m_MemoryGame.m_GoodPick = true;
+                numberOfPick = !numberOfPick;
             }
             else
             {
-                if (m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol))
+                if (m_GameLogic.TryUpdateForEquality(getRowCordForButton(firstPick), getColCordForButton(firstPick), buttonPressedRow, buttonPressedCol))
                 {
-                    if (m_GameLogic.TryUpdateForEquality(getRowCordForButton(firstPick), getColCordForButton(firstPick), buttonPressedRow, buttonPressedCol))
-                    {
-                        // change buttons border color to the color of the active player
-                        setButtonBorderColorAfterHit(firstPick, currentActivePlayer);
-                        setButtonBorderColorAfterHit(i_ButtonPressed, currentActivePlayer);
-                    }
-                    else
-                    {
-                       // m_GameLogic.TryFlipCard(getRowCordForButton(firstPick), getColCordForButton(firstPick));
-                       // m_GameLogic.TryFlipCard(buttonPressedRow, buttonPressedCol);
-                        m_MemoryGame.m_GoodPick = !true;
-                    }
-                numberOfPick = !numberOfPick;
+                    // change buttons border color to the color of the active player
+                    setButtonBorderColorAfterHit(firstPick, currentActivePlayer);
+                    setButtonBorderColorAfterHit(i_ButtonPressed, currentActivePlayer);
                 }
+                else
+                {
+                    m_MemoryGame.m_GoodPick = !true;
+                }
+                numberOfPick = !numberOfPick;
+
             }
         }
+
         void IGameControll.VisableOff(Button i_PressedButton)
         {
             int buttonPressedRow = getRowCordForButton(i_PressedButton);
@@ -136,13 +154,11 @@ namespace B20_Ex05
                     btn.Image = null;
                 }
             });
-
             // update labels
             m_MemoryGame.updateLblFirstPlayer(m_GameLogic.Players[0]);
             m_MemoryGame.updateLblSecondPlayer(m_GameLogic.Players[1]);
-
             // update UI
-            Application.DoEvents();
+           Application.DoEvents();
         }
 
         private void EndGame()
@@ -208,25 +224,7 @@ namespace B20_Ex05
             return m_GameLogic.GetCellImg(i_Row, i_Col);
         }
 
-         void IGameControll.MakeMove(Button i_ButtonPressed)
-        {
-            Player currentActivePlayer = m_GameLogic.GetActivePlayer();
-            if (currentActivePlayer.IsHuman)
-            {
-                makeHumanMove(i_ButtonPressed, currentActivePlayer);
-            }
-            else
-            {
-                //makeHumanMove(i_ButtonPressed, currentActivePlayer);
-                // ONLY FOR CHECK : disabled the computer moves
-                makeComputerMove(currentActivePlayer);
-            }
-                // check for current active player and update the UI.
-                currentActivePlayer = m_GameLogic.GetActivePlayer();
-                m_MemoryGame.UpdateLblCurrentPlayer(currentActivePlayer.Name, currentActivePlayer.Color);
-           
-            
-        }
+       
          void IGameControll.SetGridSize(string i_SizeSTR)
         {
             m_GridSize = i_SizeSTR;
