@@ -93,17 +93,25 @@ namespace B20_Ex05
             bool isTheButtonVisable = m_GameControl.GetVisavilityOfCell(sender as Button);
             if (!isTheButtonVisable)
             {
+                
                 m_GameControl.MakeMove(pressedButton);
             }
-            
             m_GameControl.UpdateContent();
-            if (!m_GoodPick)
-            {
-                System.Threading.Thread.Sleep(500);
-                m_GameControl.VisableOff(pressedButton);
-                m_GameControl.UpdateContent();
-            }
+
+            System.Threading.Thread.Sleep(500);
+
             checkIfGameEnded();
+            tryPlayComputerTurn();
+        }
+
+        private void tryPlayComputerTurn()
+        {
+            while (m_GameControl.IsCurrentActiePlayerComputer())
+            {
+                m_GameControl.MakeMove();
+                m_GameControl.UpdateContent();
+                System.Threading.Thread.Sleep(500);
+            }
         }
 
         private void checkIfGameEnded()

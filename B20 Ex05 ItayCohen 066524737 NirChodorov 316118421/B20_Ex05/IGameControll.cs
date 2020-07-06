@@ -4,7 +4,7 @@ namespace B20_Ex05
 {
     public interface IGameControll
     {
-        void MakeMove(Button i_ButtonPressed);
+        void MakeMove(Button i_ButtonPressed = null);
         char GetCellContent(int i_Row, int i_Col);
         void SetGridSize(string i_SizeSTR);
         void SetSecondPlayerName(string i_Name);
@@ -16,5 +16,6 @@ namespace B20_Ex05
         bool GetVisavilityOfCell(Button button);
         bool IsGameOn();
         void EndGameMsg();
+        bool IsCurrentActiePlayerComputer();
     }
 }

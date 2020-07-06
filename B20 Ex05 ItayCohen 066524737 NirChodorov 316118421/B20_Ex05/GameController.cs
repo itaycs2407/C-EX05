@@ -51,8 +51,10 @@ namespace B20_Ex05
             {
                 // wait for one second
                 System.Threading.Thread.Sleep(1000);
+               
+
             }
-           
+
         }
 
         private void makeHumanMove(Button i_ButtonPressed, Player currentActivePlayer)
@@ -69,7 +71,9 @@ namespace B20_Ex05
                 {
                     firstPick = i_ButtonPressed;
                     m_MemoryGame.m_GoodPick = true;
+                    //CR::WTF?!?!?!
                     numberOfPick = !numberOfPick;
+                    //CR::WTF?!?!?!
                 }
             }
             else
@@ -206,17 +210,17 @@ namespace B20_Ex05
 
          void IGameControll.MakeMove(Button i_ButtonPressed)
         {
-                Player currentActivePlayer = m_GameLogic.GetActivePlayer();
-                if (currentActivePlayer.IsHuman)
-                {
-                    makeHumanMove(i_ButtonPressed, currentActivePlayer);
-                }
-                else
-                {
-                    makeHumanMove(i_ButtonPressed, currentActivePlayer);
-                    // ONLY FOR CHECK : disabled the computer moves
-                    //makeComputerMove(currentActivePlayer);
-                }
+            Player currentActivePlayer = m_GameLogic.GetActivePlayer();
+            if (currentActivePlayer.IsHuman)
+            {
+                makeHumanMove(i_ButtonPressed, currentActivePlayer);
+            }
+            else
+            {
+                //makeHumanMove(i_ButtonPressed, currentActivePlayer);
+                // ONLY FOR CHECK : disabled the computer moves
+                makeComputerMove(currentActivePlayer);
+            }
                 // check for current active player and update the UI.
                 currentActivePlayer = m_GameLogic.GetActivePlayer();
                 m_MemoryGame.UpdateLblCurrentPlayer(currentActivePlayer.Name, currentActivePlayer.Color);
@@ -261,6 +265,11 @@ namespace B20_Ex05
         public void EndGameMsg()
         {
             EndGame();
+        }
+
+        public bool IsCurrentActiePlayerComputer()
+        {
+            return m_GameLogic.GetActivePlayer().IsHuman == !true;
         }
     }
 }

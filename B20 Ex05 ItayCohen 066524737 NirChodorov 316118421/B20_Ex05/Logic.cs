@@ -169,7 +169,7 @@ namespace B20_Ex02_1
             }
             while (!TryFlipCard(secondPick[0], secondPick[1]));
 
-            bool v_IsHit = TryUpdateForEquality(firstPick[0], firstPick[1], secondPick[0], secondPick[1]);
+           // bool v_IsHit = TryUpdateForEquality(firstPick[0], firstPick[1], secondPick[0], secondPick[1]);
             return new int[] { firstPick[0], firstPick[1], secondPick[0], secondPick[1] };
         }
 
@@ -251,8 +251,8 @@ namespace B20_Ex02_1
         private void updateOnNotEqual(int i_RowFirstCell, int i_ColFirstCell, int i_RowSecondCell, int i_ColSecondCell)
         {
             // update cells visabillity
-            //setCellVisiballity(i_RowFirstCell, i_ColFirstCell, !true);
-            //setCellVisiballity(i_RowSecondCell, i_ColSecondCell, !true);
+            setCellVisiballity(i_RowFirstCell, i_ColFirstCell, !true);
+            setCellVisiballity(i_RowSecondCell, i_ColSecondCell, !true);
 
             m_AiEngine.InsertPrevChoice(i_RowFirstCell, i_ColFirstCell, m_GameGrid[i_RowFirstCell, i_ColFirstCell]);
             m_AiEngine.InsertPrevChoice(i_RowSecondCell, i_ColSecondCell, m_GameGrid[i_RowSecondCell, i_ColSecondCell]);
