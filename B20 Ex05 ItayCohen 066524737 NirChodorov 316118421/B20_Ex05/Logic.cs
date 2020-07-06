@@ -11,21 +11,13 @@ namespace B20_Ex02_1
         private const int k_MinimumLengthForGrid = 4;
         private const int k_MaximumLengthForGrid = 6;
         private const int k_SameCardCount = 2;
-        private Random rnd = new Random();
-
-        public Cell[,] GameGrid { get => m_GameGrid; set => m_GameGrid = value; }
-
-        public int CurrentActivePlayerId { get => m_CurrentActivePlayerId; set => m_CurrentActivePlayerId = value; }
-
-        public bool IsGameOver { get => m_IsGameOver; set => m_IsGameOver = value; }
-        public List<Player> Players { get => m_Players; set => m_Players = value; }
-
         private List<Player> m_Players = null;
         private int m_CurrentActivePlayerId = 0;
         private bool m_IsGameOver = !true;
         private AiEngine m_AiEngine;
         private Cell[,] m_GameGrid;
         private List<char> m_OptionalCardsLetters;
+        private Random rnd = new Random();
 
         public Logic()
         {
@@ -33,7 +25,15 @@ namespace B20_Ex02_1
             Players = new List<Player>();
             m_OptionalCardsLetters = new List<char>() { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V' };
         }
-         
+
+        public Cell[,] GameGrid { get => m_GameGrid; set => m_GameGrid = value; }
+
+        public int CurrentActivePlayerId { get => m_CurrentActivePlayerId; set => m_CurrentActivePlayerId = value; }
+
+        public bool IsGameOver { get => m_IsGameOver; set => m_IsGameOver = value; }
+
+        public List<Player> Players { get => m_Players; set => m_Players = value; }
+
         public void ShuffleGrid()
         {
             int rowGeneratedIndex, colGeneratedIndex;
@@ -47,7 +47,7 @@ namespace B20_Ex02_1
                     {
                         rowGeneratedIndex = rnd.Next(GetGridRows());
                         colGeneratedIndex = rnd.Next(GetGridCols());
-                    } 
+                    }
                     while (m_GameGrid[rowGeneratedIndex, colGeneratedIndex] != null);
 
                     m_GameGrid[rowGeneratedIndex, colGeneratedIndex] = new Cell(m_OptionalCardsLetters[i], !true, tempPB.Image);
@@ -70,11 +70,10 @@ namespace B20_Ex02_1
             return m_GameGrid[i_Row, i_Col].ButtonBackImg;
         }
 
-        public bool IsCellVisable(int row,int col)
+        public bool IsCellVisable(int row, int col)
         {
             return m_GameGrid[row, col].IsVisable;
         }
-
 
         public bool TryCreateGrid(int i_Rows, int i_Cols)
         {
@@ -84,22 +83,22 @@ namespace B20_Ex02_1
                 GameGrid = new Cell[i_Rows, i_Cols];
                 ShuffleGrid();
             }
-            
+
             return v_IsValid;
         }
 
         public bool TryFlipCard(int i_Row, int i_Col)
         {
             bool v_FlipSuccess = !true;
-            if (checkLimits(i_Row, 0, GetGridRows() - 1 ) && checkLimits(i_Col, 0, GetGridCols() - 1 ))
+            if (checkLimits(i_Row, 0, GetGridRows() - 1) && checkLimits(i_Col, 0, GetGridCols() - 1))
             {
-                if(m_GameGrid[i_Row, i_Col].IsVisable == !true)
+                if (m_GameGrid[i_Row, i_Col].IsVisable == !true)
                 {
                     setCellVisiballity(i_Row, i_Col, true);
                     v_FlipSuccess = true;
                 }
             }
-             
+
             return v_FlipSuccess;
         }
 
@@ -161,7 +160,7 @@ namespace B20_Ex02_1
             do
             {
                 firstPick = m_AiEngine.GetPick(GetGridRows(), GetGridCols());
-            } 
+            }
             while (!TryFlipCard(firstPick[0], firstPick[1]));
             do
             {
@@ -169,7 +168,7 @@ namespace B20_Ex02_1
             }
             while (!TryFlipCard(secondPick[0], secondPick[1]));
 
-           // bool v_IsHit = TryUpdateForEquality(firstPick[0], firstPick[1], secondPick[0], secondPick[1]);
+            // bool v_IsHit = TryUpdateForEquality(firstPick[0], firstPick[1], secondPick[0], secondPick[1]);
             return new int[] { firstPick[0], firstPick[1], secondPick[0], secondPick[1] };
         }
 
@@ -210,7 +209,7 @@ namespace B20_Ex02_1
             bool v_IsValid = !((i_RowFirstCell == i_RowSecondCell) && (i_ColSecondCell == i_ColFirstCell));
 
             // check valid cordinate
-            v_IsValid = v_IsValid && (checkLimits(i_RowFirstCell, 0, GetGridRows()) && checkLimits(i_ColFirstCell, 0, GetGridCols() ))
+            v_IsValid = v_IsValid && (checkLimits(i_RowFirstCell, 0, GetGridRows()) && checkLimits(i_ColFirstCell, 0, GetGridCols()))
                 && (checkLimits(i_RowSecondCell, 0, GetGridRows()) && checkLimits(i_ColSecondCell, 0, GetGridCols()));
 
             if (v_IsValid)
@@ -229,7 +228,7 @@ namespace B20_Ex02_1
             return v_IsValid;
         }
 
-        private void updateOnEqual(int i_RowFirstCell, int i_ColFirstCell, int i_RowSecondCell, int i_ColSecondCell) 
+        private void updateOnEqual(int i_RowFirstCell, int i_ColFirstCell, int i_RowSecondCell, int i_ColSecondCell)
         {
             Player currentPlayer = GetActivePlayer();
 
@@ -274,7 +273,7 @@ namespace B20_Ex02_1
 
         public void setCellVisiballity(int i_Row, int i_Col, bool i_isVisible)
         {
-            if(checkLimits(i_Row, 0, GetGridRows()) && checkLimits(i_Row, 0, GetGridCols()))
+            if (checkLimits(i_Row, 0, GetGridRows()) && checkLimits(i_Row, 0, GetGridCols()))
             {
                 m_GameGrid[i_Row, i_Col].IsVisable = i_isVisible;
             }

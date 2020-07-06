@@ -8,11 +8,10 @@ namespace B20_Ex05
 {
     public partial class MemoryGame : Form
     {
-        private List<Button> m_GameButttons = new List<Button>();
         public bool m_GoodPick = false;
         public IGameControll m_GameControl;
-
-        public List<Button> GameButttons { get => m_GameButttons; set => m_GameButttons = value; }
+        private List<Button> m_GameButttons = new List<Button>();
+        private const int k_SleepTimeInMs = 1000;
 
         public MemoryGame(Player playerOne, Player playertwo)
         {
@@ -20,14 +19,10 @@ namespace B20_Ex05
             updatePlayersAttOnUI(playerOne, playertwo);
         }
 
-        private void updatePlayersAttOnUI(Player playerOne, Player playertwo)
-        {
-            lblCurrnetPlayer.Text = "Current Player: " + playerOne.Name;
-            lblFirstPlayer.Text = string.Format(@"{0} : 0 Pairs.", playerOne.Name);
-            lblCurrnetPlayer.BackColor = lblFirstPlayer.BackColor = Color.LightGreen;
-            lblSecondPlayer.Text = string.Format(@"{0} : 0 Pairs.", playertwo.Name);
-            lblSecondPlayer.BackColor = Color.LightBlue;
-        }
+        public List<Button> GameButttons { get => m_GameButttons; set => m_GameButttons = value; }
+
+        public int SleepTimeInMs => k_SleepTimeInMs;
+
 
         public void UpdateLblCurrentPlayer(string i_PlayerName, Color i_BackColor)
         {
@@ -39,29 +34,23 @@ namespace B20_Ex05
         {
             updateLbl(lblFirstPlayer, i_Player);
         }
+
         public void updateLblSecondPlayer(Player i_Player)
         {
             updateLbl(lblSecondPlayer, i_Player);
         }
 
-        private void updateLbl(Label i_LabelToChange, Player i_Player)
-        {
-            string pairSTR = i_Player.NumOfHits == 1 ? "Pair." : "Pairs.";
-            i_LabelToChange.Text = string.Format(@"{0} : {1} {2}", i_Player.Name, i_Player.NumOfHits , pairSTR);
-            i_LabelToChange.BackColor = i_Player.Color;
-        }
-
         public void ShuffleButtons()
         {
             Button currentButton;
-            int rows, cols; 
+            int rows, cols;
             const int startingTop = 19, startingLeft = 12, height = 80, width = 80;
             for (rows = 0; rows < m_GameControl.GetRows(); rows++)
             {
                 for (cols = 0; cols < m_GameControl.GetCols(); cols++)
                 {
-                    currentButton = new Button(); 
-                    currentButton.Top = startingTop + rows *(startingTop + height);
+                    currentButton = new Button();
+                    currentButton.Top = startingTop + rows * (startingTop + height);
                     currentButton.Left = startingLeft + cols * (startingLeft + width);
                     currentButton.Width = width;
                     currentButton.Height = height;
@@ -84,10 +73,26 @@ namespace B20_Ex05
             this.Height = lblFirstPlayer.Top + lblFirstPlayer.Height + 120;
         }
 
+        private void updatePlayersAttOnUI(Player playerOne, Player playertwo)
+        {
+            lblCurrnetPlayer.Text = "Current Player: " + playerOne.Name;
+            lblFirstPlayer.Text = string.Format(@"{0} : 0 Pairs.", playerOne.Name);
+            lblCurrnetPlayer.BackColor = lblFirstPlayer.BackColor = Color.LightGreen;
+            lblSecondPlayer.Text = string.Format(@"{0} : 0 Pairs.", playertwo.Name);
+            lblSecondPlayer.BackColor = Color.LightBlue;
+        }
+
+        private void updateLbl(Label i_LabelToChange, Player i_Player)
+        {
+            string pairSTR = i_Player.NumOfHits == 1 ? "Pair." : "Pairs.";
+            i_LabelToChange.Text = string.Format(@"{0} : {1} {2}", i_Player.Name, i_Player.NumOfHits, pairSTR);
+            i_LabelToChange.BackColor = i_Player.Color;
+        }
+
         private void CurrentButton_Click(object sender, EventArgs e)
         {
             Button pressedButton = sender as Button;
-            
+
 
             // check if the button wasnt press before
             bool isTheButtonVisable = m_GameControl.GetVisavilityOfCell(sender as Button);
@@ -98,14 +103,14 @@ namespace B20_Ex05
             m_GameControl.UpdateContent();
             checkIfGameEnded();
             tryPlayComputerTurn();
-            checkIfGameEnded();
+
         }
 
         private void workOnCard(Button i_button)
         {
             m_GameControl.TryFlipCard(i_button);
             m_GameControl.UpdateContent();
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(SleepTimeInMs);
             m_GameControl.MakeMove(i_button);
         }
 
@@ -115,17 +120,18 @@ namespace B20_Ex05
             {
                 m_GameControl.MakeMove();
                 m_GameControl.UpdateContent();
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(SleepTimeInMs);
+                checkIfGameEnded();
             }
         }
 
         private void checkIfGameEnded()
         {
-           if (!m_GameControl.IsGameOn())
+            if (!m_GameControl.IsGameOn())
             {
                 m_GameControl.EndGameMsg();
             }
         }
 
     }
-    }
+}
