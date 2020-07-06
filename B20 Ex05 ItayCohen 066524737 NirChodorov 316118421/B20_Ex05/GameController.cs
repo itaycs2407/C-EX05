@@ -14,7 +14,7 @@ namespace B20_Ex05
         public string m_FirstPlayerName;
         public string m_SecondPlayerName;
         public string m_GridSize;
-        public int rows , cols;
+        public int m_Rows , m_Col;
         bool numberOfPick = true;
         Button firstPick;
 
@@ -102,7 +102,7 @@ namespace B20_Ex05
         }
         private void setButtonBorderColorAfterHit(int i_Row, int i_Col, Player currentActivePlayer)
         {
-            int buttonTabIndex = i_Row * rows + i_Col;
+            int buttonTabIndex = i_Row * m_Rows + i_Col;
             m_MemoryGame.GameButttons.ForEach(btn =>
             {
                 if (btn.TabIndex == buttonTabIndex)
@@ -165,12 +165,17 @@ namespace B20_Ex05
 
         private int getRowCordForButton(Button i_Button)
         {
-            return (i_Button.TabIndex / rows);
+            int returnCalcRow = i_Button.TabIndex / m_Rows;
+            if (returnCalcRow == m_Rows)
+            {
+                returnCalcRow--;
+            }
+            return returnCalcRow;
         }
 
         private int getColCordForButton(Button i_Button)
         {
-            return (i_Button.TabIndex % cols);
+            return (i_Button.TabIndex % m_Col);
         }
 
         private void initializePlayers()
@@ -189,9 +194,9 @@ namespace B20_Ex05
 
         private void initializeGrid()
         {
-            rows = m_GridSize[0]-48;
-            cols = m_GridSize[4]-48;
-            m_GameLogic.TryCreateGrid(rows, cols);
+            m_Rows = m_GridSize[0]-48;
+            m_Col = m_GridSize[4]-48;
+            m_GameLogic.TryCreateGrid(m_Rows, m_Col);
         }
 
         public char GetCellContent(int i_Row, int i_Col)
@@ -239,11 +244,11 @@ namespace B20_Ex05
         }
          int IGameControll.GetRows()
         {
-            return rows;
+            return m_Rows;
         }
          int IGameControll.GetCols()
         {
-            return cols;
+            return m_Col;
         }
 
         public bool GetVisavilityOfCell(Button i_PressedButton)
